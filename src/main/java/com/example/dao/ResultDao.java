@@ -25,4 +25,18 @@ public interface ResultDao {
      */
     Result findResultByUserAndTestId(Integer userId, Integer testId);
 
+    /**
+     * @param result - result to save
+     */
+    void save(Result result);
+
+    /**
+     * @param result - result to update
+     */
+    void update(Result result);
+
+    /**
+     * @param result - result to delete
+     */
+    void delete(Result result);
 }

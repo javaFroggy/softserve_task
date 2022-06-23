@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDao {
 
@@ -16,7 +17,7 @@ public interface UserDao {
      * @param userName - username that will be inserted into query
      * @return User object
      */
-    User findByUserName(String userName);
+    Optional<User> findByUserName(String userName);
 
     /**
      * @return List<Users>, containing all users
@@ -28,4 +29,14 @@ public interface UserDao {
      * @param user - user to save
      */
     void save(User user);
+
+    /**
+     * @param user - user to delete
+     */
+    void delete(User user);
+
+    /**
+     * @param user - user to update
+     */
+    void update(User user);
 }

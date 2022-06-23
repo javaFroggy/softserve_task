@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -33,13 +35,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByUserName(String userName) {
+    public Optional<User> findByUserName(String userName) {
         Session session = sessionFactory.getCurrentSession();
-        User user = (User) session.createQuery("FROM User u WHERE u.username = :username")
-                .setParameter("username", userName)
-                .getSingleResult();
-        log.info("found user by username: " + userName + ", with id: " + user.getId());
-        return user;
+        try {
+            return Optional.of((User)session.createQuery("FROM User u WHERE u.username = :username")
+                    .setParameter("username", userName)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -55,5 +59,19 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         log.info("saving user with username: " + user.getUsername() + ", id: " + user.getId());
         session.save(user);
+    }
+
+    @Override
+    public void delete(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(user);
+        log.info("deleted user with username: " + user.getUsername() + ", id: " + user.getId());
+    }
+
+    @Override
+    public void update(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(user);
+        log.info("updated user with username: " + user.getUsername() + ", id: " + user.getId());
     }
 }

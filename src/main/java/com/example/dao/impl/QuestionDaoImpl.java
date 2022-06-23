@@ -1,15 +1,18 @@
 package com.example.dao.impl;
 
 import com.example.dao.QuestionDao;
+import com.example.model.Answer;
 import com.example.model.Question;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class QuestionDaoImpl implements QuestionDao {
 
     private Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
@@ -32,12 +35,43 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public List<Question> findQuestionsByTestId(Integer testId) {
+    public List<Answer> findAnswersByQuestions(Integer id) {
         Session session = sessionFactory.getCurrentSession();
 
-        List<Question> list = session.createQuery("FROM Question q WHERE q.test.id = :id")
-                .setParameter("id", testId).getResultList();
+        List<Answer> result = session
+                .createQuery("FROM Answer a WHERE A.id = :id")
+                .setParameter("id", id)
+                .getResultList();
 
-        return list;
+
+        return result;
+    }
+
+    @Override
+    public void updateQuestion(Question question) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(question);
+        log.info("updated question with text: " + question.getQuestionText() + ", id: " + question.getId());
+    }
+
+    @Override
+    public void deleteQuestion(Question question) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(question);
+        log.info("deleted question with text: " + question.getQuestionText() + ", id: " + question.getId());
+    }
+
+    @Override
+    public void saveQuestion(Question question) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(question);
+        log.info("saved question with text: " + question.getQuestionText() + ", id: " + question.getId());
+    }
+
+    @Override
+    public void saveAnswer(Answer answer) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(answer);
+        log.info("saved answer with text: " + answer.getAnswerText() + ", id: " + answer.getId());
     }
 }
