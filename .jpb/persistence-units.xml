@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit name="entities">
+        <packages>
+          <package value="com.example.model" />
+        </packages>
+        <entities>
+          <entity value="com.example.model.Attempt" />
+        </entities>
+      </persistence-unit>
+    </persistence-units>
+  </component>
+</project>
