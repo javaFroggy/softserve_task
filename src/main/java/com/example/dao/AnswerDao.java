@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface AnswerDao {
 
-    List<Answer> getAllAnswersByQuestionId(Integer testId);
-
+    /**
+     * @param questionId - id of question to find answers
+     * @return answers to question
+     */
+    List<Answer> getAllAnswersByQuestionId(Integer questionId);
 
 }

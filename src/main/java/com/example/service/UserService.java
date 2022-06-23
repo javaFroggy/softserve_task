@@ -14,6 +14,7 @@ public class UserService {
 
     @Autowired
     public UserService(UserDao userDao){this.userDao = userDao; }
+
     public User findById(Integer id){
         return userDao.findById(id);
     }

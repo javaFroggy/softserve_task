@@ -6,11 +6,26 @@ import java.util.List;
 
 public interface UserDao {
 
+    /**
+     * @param id - id that will be inserted into query
+     * @return User object
+     */
     User findById(Integer id);
 
+    /**
+     * @param userName - username that will be inserted into query
+     * @return User object
+     */
     User findByUserName(String userName);
 
+    /**
+     * @return List<Users>, containing all users
+     */
     List<User> getAllUsers();
 
+    /**
+     * Saves user in database
+     * @param user - user to save
+     */
     void save(User user);
 }
