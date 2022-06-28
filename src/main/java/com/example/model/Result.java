@@ -1,7 +1,15 @@
 package com.example.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "results")
 public class Result {
@@ -20,37 +28,4 @@ public class Result {
 
     @Column(name = "percentage", nullable = false)
     private Double percentage;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
-    }
-
-    public Double getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
-    }
-
 }

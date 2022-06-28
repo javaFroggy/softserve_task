@@ -5,19 +5,19 @@ import com.example.model.Answer;
 import com.example.model.Question;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Repository
 public class QuestionDaoImpl implements QuestionDao {
 
-    private Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
-    private final SessionFactory sessionFactory;
+    private final Logger LOGGER = LoggerFactory.getLogger(QuestionDaoImpl.class);
 
+    private final SessionFactory sessionFactory;
 
     @Autowired
     public QuestionDaoImpl(SessionFactory sessionFactory){
@@ -31,6 +31,7 @@ public class QuestionDaoImpl implements QuestionDao {
         Question question = (Question)session.createQuery("FROM Question q WHERE q.id = :id")
                 .setParameter("id", id).getSingleResult();
 
+        LOGGER.info("Question with id:{} found", id);
         return question;
     }
 
@@ -43,7 +44,7 @@ public class QuestionDaoImpl implements QuestionDao {
                 .setParameter("id", id)
                 .getResultList();
 
-
+        LOGGER.info("Questions for test with id:{} found", id);
         return result;
     }
 
@@ -51,27 +52,31 @@ public class QuestionDaoImpl implements QuestionDao {
     public void updateQuestion(Question question) {
         Session session = sessionFactory.getCurrentSession();
         session.update(question);
-        log.info("updated question with text: " + question.getQuestionText() + ", id: " + question.getId());
+
+        LOGGER.info("Question with id:{} updated", question.getId());
     }
 
     @Override
     public void deleteQuestion(Question question) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(question);
-        log.info("deleted question with text: " + question.getQuestionText() + ", id: " + question.getId());
+
+        LOGGER.info("Question with id:{} deleted", question.getId());
     }
 
     @Override
     public void saveQuestion(Question question) {
         Session session = sessionFactory.getCurrentSession();
         session.save(question);
-        log.info("saved question with text: " + question.getQuestionText() + ", id: " + question.getId());
+
+        LOGGER.info("Question with id:{} saved", question.getId());
     }
 
     @Override
     public void saveAnswer(Answer answer) {
         Session session = sessionFactory.getCurrentSession();
         session.save(answer);
-        log.info("saved answer with text: " + answer.getAnswerText() + ", id: " + answer.getId());
+
+        LOGGER.info("Answer with id:{} saved", answer.getId());
     }
 }

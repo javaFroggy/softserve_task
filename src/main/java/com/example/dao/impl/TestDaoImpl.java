@@ -5,8 +5,6 @@ import com.example.model.Question;
 import com.example.model.Test;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +13,6 @@ import java.util.List;
 @Repository
 public class TestDaoImpl implements TestDao {
 
-    private final Logger log = LoggerFactory.getLogger(TestDaoImpl.class);
     private final SessionFactory sessionFactory;
 
 
@@ -34,8 +31,6 @@ public class TestDaoImpl implements TestDao {
                 .setParameter("id", id)
                 .getSingleResult();
 
-        log.info("found test with id: " + id);
-
         return test;
     }
 
@@ -47,8 +42,6 @@ public class TestDaoImpl implements TestDao {
                 .createQuery("FROM Test t")
                 .getResultList();
 
-        log.info("found all tests");
-
         return result;
     }
 
@@ -58,7 +51,6 @@ public class TestDaoImpl implements TestDao {
 
         session.save(test);
 
-        log.info("saved test with id: " + test.getId());
     }
 
     @Override
@@ -70,7 +62,6 @@ public class TestDaoImpl implements TestDao {
                 .setParameter("id", id)
                 .getResultList();
 
-        log.info("found questions of test with id: " + id);
         return result;
     }
 
@@ -78,13 +69,11 @@ public class TestDaoImpl implements TestDao {
     public void update(Test test) {
         Session session = sessionFactory.getCurrentSession();
         session.update(test);
-        log.info("updated test with name: " + test.getTestName() + ", id: " + test.getId());
     }
 
     @Override
     public void delete(Test test) {
         Session session = sessionFactory.getCurrentSession();
         session.update(test);
-        log.info("deleted test with name: " + test.getTestName() + ", id: " + test.getId());
     }
 }

@@ -1,9 +1,17 @@
 package com.example.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tests")
 public class Test {
@@ -30,61 +38,4 @@ public class Test {
 
     @OneToMany(mappedBy = "test")
     private Set<Result> results = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTestName() {
-        return testName;
-    }
-
-    public void setTestName(String testName) {
-        this.testName = testName;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public String getTestDescription() {
-        return testDescription;
-    }
-
-    public void setTestDescription(String testDescription) {
-        this.testDescription = testDescription;
-    }
-
-    public String getTestTheme() {
-        return testTheme;
-    }
-
-    public void setTestTheme(String testTheme) {
-        this.testTheme = testTheme;
-    }
-
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
-    }
-
-    public Set<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(Set<Result> results) {
-        this.results = results;
-    }
-
 }

@@ -17,7 +17,7 @@ public interface UserDao {
      * @param userName - username that will be inserted into query
      * @return User object
      */
-    Optional<User> findByUserName(String userName);
+    User findByUserName(String userName);
 
     /**
      * @return List<Users>, containing all users
