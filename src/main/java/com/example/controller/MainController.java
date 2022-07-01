@@ -5,7 +5,6 @@ import com.example.service.UserService;
 import com.example.util.Role;
 import com.example.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +21,13 @@ public class MainController {
         this.userService = userService;
     }
 
-    @GetMapping({"/login"})
+    @GetMapping({"/login", "/"})
     public String login(Model model, @RequestParam(value = "error", required = false) String error){
         boolean errorMessage = false;
         if (error != null){
             errorMessage = true;
         }
-        model.addAttribute("errorMessage", true);
+        model.addAttribute("errorMessage", errorMessage);
         return "login";
     }
 
@@ -39,11 +38,15 @@ public class MainController {
 
     @PostMapping({"/registration"})
     public String addUser(@RequestParam("username")String username,
+                          @RequestParam("full_name")String fullName,
                           @RequestParam("password")String password,
+                          @RequestParam("email")String email,
                           Model model){
         User user = User.builder()
                 .username(username)
                 .password(password)
+                .fullName(fullName)
+                .email(email)
                 .status(Status.ACTIVE)
                 .role(Role.USER)
                 .build();
@@ -54,18 +57,12 @@ public class MainController {
         }
 
         userService.saveUser(user);
-        return "redirect:/index";
+        return "mainPage";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/mainPage")
     public String index(){
-        return "index";
-    }
-
-    @PreAuthorize("hasAnyAuthority('user:write')")
-    @GetMapping("/administration")
-    public String administrationPage(){
-        return "administrationPage";
+        return "mainPage";
     }
 
     @GetMapping("/accessDenied")
